@@ -1,0 +1,35 @@
+# vi: set ft=zsh :
+
+# colors
+alias ls='ls --color=auto'
+alias ssh='TERM=xterm-color ssh'
+alias diff='diff --color=auto'
+alias grep='grep --color=auto'
+alias ip='ip -color=auto'
+alias tmux="env TERM=screen-256color tmux"
+
+#reload
+alias reload='source ~/.zshrc'
+
+# dwm rules
+alias window_props="xprop | awk '
+    /^WM_CLASS/{sub(/.* =/, \"instance:\"); sub(/,/, \"\nclass:\"); print}
+    /^WM_NAME/{sub(/.* =/, \"title:\"); print}'"
+
+# sys utils
+alias battery="cat /sys/class/power_supply/*/capacity"
+
+alias unzipall='for f in *.zip; do unzip -d "./${f%.zip}/" "$f"; done'
+alias myip='curl http://ipecho.net/plain; echo'
+alias texbib='_pdflatex main.tex && bibtex output/main && _pdflatex main.tex && _pdflatex main.tex'
+alias virsh='virsh --connect qemu:///system'
+
+function unzipone()
+{
+    unzip -d "./${1%.zip}/" "$1";
+}
+
+function _pdflatex() 
+{
+    pdflatex --output-directory output "$1";
+}
