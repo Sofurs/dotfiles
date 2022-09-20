@@ -1,0 +1,14 @@
+#!/bin/bash
+
+run_hook() {
+    x=0;
+    while [ ! -b /dev/mapper/root ] && [ $x -le 10 ]; do
+        x=$((x+1))
+        sleep .2
+    done
+
+    mkdir crypt_key_device
+    mount /dev/mapper/root crypt_key_device
+    cryptsetup open --key-file crypt_key_device/crypt_keys/swap_key ${part2} swap
+    umount crypt_key_device
+}
