@@ -1,0 +1,4 @@
+#!/bin/sh
+
+. dblocks-theme
+display " $(date '+%I:%M:%S %p')"

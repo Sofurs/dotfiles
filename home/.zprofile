@@ -2,10 +2,11 @@ export TERM='alacritty'
 export EDITOR='nvim'
 export VISUAL='nvim'
 export BROWSER='brave'
+export PATH="$HOME/.local/bin:$HOME/.config/rofi/scripts:$PATH"
 
-export LESS='-R --use-color -Dd+r$Du+b'
 export MANPAGER="less -R --use-color -Dd+r -Du+b"
 
 if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
-	exec startx
+	exec startx -- vt1 &> /dev/null
+    logout
 fi

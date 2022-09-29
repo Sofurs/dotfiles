@@ -1,35 +1,41 @@
 # vi: set ft=zsh :
 
-# colors
+alias open="xdg-open"
+alias time="/usr/bin/time"
+
 alias ls='ls --color=auto'
 alias ssh='TERM=xterm-color ssh'
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias ip='ip -color=auto'
-alias tmux="env TERM=screen-256color tmux"
 
-#reload
-alias reload='source ~/.zshrc'
+alias docker-ip="docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"
 
-# dwm rules
 alias window_props="xprop | awk '
     /^WM_CLASS/{sub(/.* =/, \"instance:\"); sub(/,/, \"\nclass:\"); print}
     /^WM_NAME/{sub(/.* =/, \"title:\"); print}'"
 
-# sys utils
 alias battery="cat /sys/class/power_supply/*/capacity"
 
+alias reload='source ~/.zshrc'
+
+alias tmux="env TERM=screen-256color tmux"
+
 alias unzipall='for f in *.zip; do unzip -d "./${f%.zip}/" "$f"; done'
+alias fiit-vpn='sudo setsid -f openvpn fiit-vpn.ovpn 2>&1 > /dev/null'
+
 alias myip='curl http://ipecho.net/plain; echo'
-alias texbib='_pdflatex main.tex && bibtex output/main && _pdflatex main.tex && _pdflatex main.tex'
 alias virsh='virsh --connect qemu:///system'
+alias latexmk="latexmk -pdf -outdir=out"
+
+function ova2qcow2()
+{
+    mkdir -p "/tmp/$1/"
+    tar -xvf $1 -C "/tmp/$1/"
+    qemu-img convert -O qcow2 "/tmp/$1/${1%%.ova}"*.vmdk output.qcow2
+}
 
 function unzipone()
 {
     unzip -d "./${1%.zip}/" "$1";
-}
-
-function _pdflatex() 
-{
-    pdflatex --output-directory output "$1";
 }

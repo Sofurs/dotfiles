@@ -8,7 +8,7 @@ Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-compe'
 
-Plug 'joshdick/onedark.vim'
+Plug 'ellisonleao/gruvbox.nvim'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -21,6 +21,10 @@ Plug 'airblade/vim-gitgutter'
 Plug 'TimUntersberger/neogit'
 
 call plug#end()
+
+" Numbers
+set nu
+set rnu
 
 " Tabspaces
 set tabstop=4
@@ -36,9 +40,28 @@ nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
-" OneDark
+" Gruvbox
 syntax on
-colorscheme onedark
+lua << EOF
+require("gruvbox").setup({
+  undercurl = true,
+  underline = true,
+  bold = true,
+  italic = true,
+  strikethrough = true,
+  invert_selection = false,
+  invert_signs = false,
+  invert_tabline = false,
+  invert_intend_guides = false,
+  inverse = true, -- invert background for search, diffs, statuslines and errors
+  contrast = "", -- can be "hard", "soft" or empty string
+  overrides = {},
+  dim_inactive = false,
+  transparent_mode = true,
+})
+EOF
+set background=dark
+colorscheme gruvbox
 
 " NerdTree
 nnoremap <Leader>n :NERDTreeToggle<CR>
@@ -51,11 +74,12 @@ nnoremap <Leader>vr :source $MYVIMRC<CR>
 set mouse=a
 
 " Gitgutter
-set signcolumn=yes
+" set signcolumn=yes
 
 " Native LSP
 lua << EOF
 require'lspconfig'.pyright.setup{on_attach=on_attach}
+require'lspconfig'.clangd.setup{on_attach=on_attach}
 vim.o.completeopt = 'menuone,noselect'
 require'compe'.setup {
   enabled = true;

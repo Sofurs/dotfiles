@@ -1,0 +1,17 @@
+#!/bin/sh
+
+[ $(cat /sys/class/net/wl*/operstate 2>/dev/null) = up ] && wifiIcon="直 $(nmcli device status | grep 'wifi ' | tr -s ' ' | cut -d ' ' -f 4-)"
+
+if [ -n "$(ls -d /sys/class/net/e* 2> /dev/null)" ] && [ $(cat /sys/class/net/e*/operstate 2>/dev/null) = up ]; then
+	ethIcon=""
+else
+	if [ ! "$wifiIcon" ]; then
+		echo "睊"
+		exit 0
+	fi
+fi
+
+[ "$(ip tuntap show)" ] && vpnIcon="嬨" || vpnIcon=""
+
+. dblocks-theme
+display "$wifiIcon$ethIcon$vpnIcon"

@@ -21,6 +21,6 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
 
-eval `dircolors ~/.dir_colors/dircolors`
+#eval `dircolors ~/.dir_colors/dircolors`
 
 source ~/.zprofile

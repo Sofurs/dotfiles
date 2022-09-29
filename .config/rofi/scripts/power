@@ -1,0 +1,50 @@
+#!/bin/bash
+
+option1="(K) Lock"
+option2="(L) Logout"
+option3="(R) Reboot"
+option4="(P) Power off"
+option5="(S) Suspend"
+option6="(H) Hibernate"
+option7="(C) Change power profile"
+option8="(X) Cancel"
+
+options="$option1\n$option2\n$option3\n$option4\n$option5\n$option6\n$option7\n$option8"
+
+pwr1="(P) Performance"
+pwr2="(B) Balanced"
+pwr3="(S) Power Saver"
+pwr4="(X) Cancel"
+
+pwrs="$pwr1\n$pwr2\n$pwr3\n$pwr4"
+
+action=$(echo -e "$options" | rofi -dmenu -b -i -p " ")
+case "$action" in
+    $option1*)
+        betterlockscreen -l dimblur --off 60;;
+    $option2*)
+        pkill dwm;;
+    $option3*)
+        systemctl reboot;;
+    $option4*)
+        systemctl poweroff;;
+    $option5*)
+        systemctl suspend;;
+    $option6*)
+        systemctl hibernate;;
+    $option7*)
+        currentpwr=$(powerprofilesctl get)
+        pwraction=$(echo -e "$pwrs" | rofi -dmenu -b -i -p "Current profile is: ${currentpwr} | Select profile:")
+        case "$pwraction" in
+            $pwr1*)
+                powerprofilesctl set performance && notify-send "Power profile switched to performance";;
+            $pwr2*)
+                powerprofilesctl set balanced && notify-send "Power profile switched to balanced";;
+            $pwr3*)
+                powerprofilesctl set power-saver && notify-send "Power profile switched to power saver";;
+            $pwr4*)
+                exit 0
+        esac;;
+    $option7*)
+        exit 0
+esac
