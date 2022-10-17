@@ -1,6 +1,9 @@
 set font "mononoki Nerd Font 9"
 
-set recolor-keephue "false"
+set recolor-keephue true
+set recolor true
+set recolor-lightcolor \#222222
+# invertcolors C-r
 
 set selection-clipboard "clipboard"
 

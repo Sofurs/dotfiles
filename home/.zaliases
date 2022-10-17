@@ -2,6 +2,9 @@
 
 alias open="xdg-open"
 alias time="/usr/bin/time"
+alias refreshbg="feh --no-fehbg --recursive --bg-fill --randomize ~/.wallpapers/*"
+alias rm=trash
+alias nnn='nnn -e'
 
 alias ls='ls --color=auto'
 alias ssh='TERM=xterm-color ssh'
@@ -28,14 +31,16 @@ alias myip='curl http://ipecho.net/plain; echo'
 alias virsh='virsh --connect qemu:///system'
 alias latexmk="latexmk -pdf -outdir=out"
 
-function ova2qcow2()
-{
+function ova2qcow2() {
     mkdir -p "/tmp/$1/"
     tar -xvf $1 -C "/tmp/$1/"
     qemu-img convert -O qcow2 "/tmp/$1/${1%%.ova}"*.vmdk output.qcow2
 }
 
-function unzipone()
-{
+function unzipone() {
     unzip -d "./${1%.zip}/" "$1";
+}
+
+function get_srv_crt() {
+    echo | openssl s_client -servername $1 -connect $1:$2 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > $1.crt
 }
