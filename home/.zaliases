@@ -34,13 +34,26 @@ alias latexmk="latexmk -pdf -outdir=out"
 function ova2qcow2() {
     mkdir -p "/tmp/$1/"
     tar -xvf $1 -C "/tmp/$1/"
-    qemu-img convert -O qcow2 "/tmp/$1/${1%%.ova}"*.vmdk output.qcow2
+    qemu-img convert -O qcow2 "/tmp/$1/"*.vmdk "${1%%.ova}.qcow2"
+}
+
+function vdi2qcow2() {
+    qemu-img convert -f vdi -O qcow2 $1 "${1%%.vdi}.qcow2"
 }
 
 function unzipone() {
-    unzip -d "./${1%.zip}/" "$1";
+    unzip -d "./${1%%.zip}/" "$1";
 }
 
 function get_srv_crt() {
     echo | openssl s_client -servername $1 -connect $1:$2 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > $1.crt
+}
+
+alias bathelp='bat --plain --language=help'
+function help() {
+    "$@" --help 2>&1 | bathelp
+}
+
+function batdiff() {
+    git diff --name-only --relative --diff-filter=d | xargs bat --diff
 }

@@ -2,6 +2,8 @@ export TERM='alacritty'
 export EDITOR='nvim'
 export VISUAL='nvim'
 export BROWSER='brave'
+export PATH="/opt/metasploit-framework/embedded/bin:$PATH"
+export PATH="/opt/metasploit-framework/embedded/framework/tools/exploit:$PATH"
 export PATH="$HOME/.local/bin:$HOME/.config/rofi/scripts:$PATH"
 
 export MANPAGER="less -R --use-color -Dd+r -Du+b"
